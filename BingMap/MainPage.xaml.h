@@ -6,16 +6,22 @@
 #pragma once
 
 #include "MainPage.g.h"
+#include "mapcontroller.h"
+
+using namespace Windows::Devices::Geolocation;
 
 namespace BingMap
 {
-	/// <summary>
-	/// An empty page that can be used on its own or navigated to within a Frame.
-	/// </summary>
+    [Windows::Foundation::Metadata::WebHostHidden]
 	public ref class MainPage sealed
 	{
 	public:
 		MainPage();
+
+        void MapLoaded(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
+        void MapClick(Windows::UI::Xaml::Controls::Maps::MapControl^ sender, Windows::UI::Xaml::Controls::Maps::MapInputEventArgs^ args);
+    private:
+        MapController^ mapController;
 
 	};
 }

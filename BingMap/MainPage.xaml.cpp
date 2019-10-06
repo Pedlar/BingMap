@@ -9,6 +9,7 @@
 using namespace BingMap;
 
 using namespace Platform;
+using namespace Windows::Devices::Geolocation;
 using namespace Windows::Foundation;
 using namespace Windows::Foundation::Collections;
 using namespace Windows::UI::Xaml;
@@ -19,9 +20,18 @@ using namespace Windows::UI::Xaml::Input;
 using namespace Windows::UI::Xaml::Media;
 using namespace Windows::UI::Xaml::Navigation;
 
-// The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
-
-MainPage::MainPage()
-{
+MainPage::MainPage() {
 	InitializeComponent();
+    mapController = ref new MapController();
+}
+
+void MainPage::MapLoaded(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e) {
+    mapController->SetMapControl(mMap);
+    mapController->SetSceneToAustin();
+}
+
+void MainPage::MapClick(Windows::UI::Xaml::Controls::Maps::MapControl ^ sender, Windows::UI::Xaml::Controls::Maps::MapInputEventArgs ^ args) {
+    BasicGeoposition tappedGeoPosition = args->Location->Position;
+    String^ status = "MapTapped at Latitude:" + tappedGeoPosition.Latitude + ", Longitude: " + tappedGeoPosition.Longitude;
+    StatusBlock->Text = status;
 }
